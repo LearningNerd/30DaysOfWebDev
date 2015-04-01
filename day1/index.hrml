@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Liz's Awesome First GitHub Pages Website</title>
+		<!-- link to main stylesheet -->
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+		<!-- http://c4rin3.wordpress.com/2014/05/26/mini-robots -->
+<nav>
+    		<ul>
+        		<li><a href="/">Home</a></li>
+	        	<li><a href="#">About</a></li>
+        		<li><a href="#">Blog</a></li>
+    		</ul>
+		</nav>
+		<h1>Hello! This is Liz's awesome first GitHub Pages site.</h1>
+		<p>I'm learning how to make stuff on the interwebz! I built this using <a href="http://jmcglone.com/guides/github-pages/">this guy's GitHub pages tutorial</a>. Also, here are some dancing robots, which I stole from <a href="http://codepen.io/c4rin3/pen/Gsfmu">here</a>.</p>
+		<div class="robot1"></div>
+		<div class="robot2"></div>
+		<div class="robot3"></div>
+		<div class="robot4"></div>
+		<div class="robot5"></div>
+		<footer>
+    		<ul>
+        		<li><a href="https://github.com/LearningNerd">github.com/LearningNerd</a></li>
+        		<li><a href="https://github.com/LearnToCodeLA">github.com/LearnToCodeLA</a></li>
+			</ul>
+		</footer>
+	</body>
+</html>
