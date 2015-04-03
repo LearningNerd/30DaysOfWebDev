@@ -34,6 +34,7 @@ h1 {
 footer {
     border-top: 1px solid #d5d5d5;
     font-size: .8em;
+    clear: both;
 }
 
 ul.posts { 
