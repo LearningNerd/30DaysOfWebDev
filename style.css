@@ -3,8 +3,8 @@ body {
     width: 70%;
     max-width: 950px;
 }
-p {
-    font-size: 1.5em;
+p, li {
+    font-size: 1em;
     line-height: 1.4em;
     color: #333;
 }
