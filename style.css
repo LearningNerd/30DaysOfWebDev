@@ -67,3 +67,7 @@ ul#days li {
 ul#days li.done {
 	background:#ccee99;
 }
+ul#days a:hover {
+	background:#ee99cc;	
+}
+}
