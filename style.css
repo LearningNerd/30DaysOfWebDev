@@ -55,6 +55,7 @@ ul#days li {
 	display: inline;
 	float:left;
     	margin: 5px;
+	padding:20px;
 	width:80px;
 	height:80px;
 	text-align:center;
