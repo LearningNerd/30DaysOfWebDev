@@ -62,7 +62,7 @@ ul#days li {
 	font-size:1.3em;
 	font-weight:bold;
 	text-align:center;
-	background:#d5d5d5;
+	background:#eee;
 }
 ul#days li.done {
 	background:#ccee99;
