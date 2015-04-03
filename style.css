@@ -51,13 +51,15 @@ ul#days {
 	margin: 0 auto;
 }
 
-ul#days  li {
+ul#days li {
 	display: inline;
 	float:left;
-    margin: 5px;
-	padding: 20px;
-	width:70px;
-	height:70px;
+    	margin: 5px;
+	width:40px;
+	height:40px;
 	text-align:center;
 	background:#d5d5d5;
+}
+ul#days li.done {
+	background:#ccee99;
 }
