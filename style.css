@@ -3,8 +3,8 @@ body {
     width: 70%;
     max-width: 950px;
 }
-p, li {
-    font-size: 1em;
+p {
+    font-size: 1.5em;
     line-height: 1.4em;
     color: #333;
 }
@@ -17,7 +17,9 @@ nav ul, footer ul {
 nav ul li, footer ul li {
     display: inline;
     margin-right: 20px;
+    font-size:1em;
 }
+
 a {
     text-decoration: none;
     color: #999;
