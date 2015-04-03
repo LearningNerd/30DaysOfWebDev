@@ -67,7 +67,7 @@ ul#days li {
 ul#days li.done {
 	background:#ccee99;
 }
-ul#days a:hover {
+ul#days li:hover {
 	background:#eecc99;
 	text-decoration:underline;
 }
