@@ -44,3 +44,19 @@ ul.posts {
 ul.posts li {
     list-style: none;
 }
+
+ul#days {
+    list-style: none;
+	margin: 0 auto;
+}
+
+ul#days  li {
+	display: inline;
+	float:left;
+    margin: 5px;
+	padding: 20px;
+	width:70px;
+	height:70px;
+	text-align:center;
+	background:#d5d5d5;
+}
