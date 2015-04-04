@@ -3,6 +3,11 @@ body {
     width: 70%;
     max-width: 950px;
 }
+p, li {
+    font-size: 1.5em;
+    line-height: 1.4em;
+    color: #333;
+}
 nav ul, footer ul {
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
     padding: 0px;
@@ -12,7 +17,9 @@ nav ul, footer ul {
 nav ul li, footer ul li {
     display: inline;
     margin-right: 20px;
+    font-size:1em;
 }
+
 a {
     text-decoration: none;
     color: #999;
@@ -24,14 +31,11 @@ h1 {
     font-size: 3em;
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
 }
-p, li {
-    font-size: 1.5em;
-    line-height: 1.4em;
-    color: #333;
-}
 footer {
     border-top: 1px solid #d5d5d5;
     font-size: .8em;
+    margin-top:1em;
+    clear: both;
 }
 
 ul.posts { 
@@ -41,4 +45,30 @@ ul.posts {
 
 ul.posts li {
     list-style: none;
+}
+
+ul#days {
+    list-style: none;
+	margin: 0 auto;
+}
+
+ul#days li {
+	display: inline;
+	float:left;
+    	margin: 5px;
+	padding:10px;
+	width:60px;
+	height:60px;
+	font-family:'Helvetica', 'Arial', 'Sans-Serif';
+	font-size:1.3em;
+	font-weight:bold;
+	text-align:center;
+	background:#eee;
+}
+ul#days li.done {
+	background:#ccee99;
+}
+ul#days a:hover li {
+	background:#eecc99;
+	font-size:1.4em;
 }
