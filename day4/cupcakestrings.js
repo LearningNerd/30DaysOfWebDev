@@ -15,3 +15,19 @@ function upperCase() {
 
 // run upperCase function when button with ID "toupper" is pressed
 document.getElementById('toupper').addEventListener('click', upperCase);
+
+function moreCowbell() {
+	// get the current value of the text inside the textarea with ID "cupcakeinput"
+	var cupcakeInput = document.getElementById("cupcakeinput").value;
+	var cowbellArray = cupcakeInput.split(' ');
+	
+	// add in the cowbell
+	var cowbellCupakeText = "";
+	for (var i = 0; i < cowbellArray.length; i++){
+		cowbellCupakeText += cowbellArray[i] + ' cowbell ';
+	}
+	document.getElementById("cupcakeinput").value = cowbellCupakeText;
+}
+
+// run moreCowbell function when button with ID "morecowbell" is pressed
+document.getElementById('morecowbell').addEventListener('click', moreCowbell);

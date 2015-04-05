@@ -48,7 +48,8 @@ ul.posts li {
 #cupcakeinput {
 	width: 100%;
 	height:200px;
-	
+	font-family: 'Georgia', 'Times New Roman', serif;
+	text-shadow: 2px 2px 7px rgba(255, 255, 255, 1);
 	background: #fcecfc; /* Old browsers */
 background: -moz-linear-gradient(top,  #fcecfc 0%, #fba6e1 52%, #fd89d7 74%, #ff7cd8 100%); /* FF3.6+ */
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fcecfc), color-stop(52%,#fba6e1), color-stop(74%,#fd89d7), color-stop(100%,#ff7cd8)); /* Chrome,Safari4+ */
