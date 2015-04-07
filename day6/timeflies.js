@@ -15,15 +15,24 @@ function updateTime() {
 	
 	// say "1 minute" singular, but then use "minutes" plural
 	if (minutesPassed == 1) {
-		timerString += minutesPassed + ' minute and ';
+		timerString += minutesPassed + ' minute';
 	} else if (minutesPassed > 1){
-		timerString += minutesPassed + ' minutes and ';
+		timerString += minutesPassed + ' minutes';
+	}
+	
+	if (minutesPassed >= 1 && secondsRemainder >= 1) {
+		timerString += ' and ';
+	}
+	
+	// so the timer doesn't disappear before the first second elapses:
+	if (secondsPassed == 0) {
+		timerString += secondsPassed + ' seconds';
 	}
 	
 	// say "1 second" singular, but then use plural "Seconds"
 	if (secondsRemainder == 1) {
 		timerString += secondsRemainder + ' second';
-	} else if (secondsRemainder == 0 || secondsRemainder > 1){	
+	} else if (secondsRemainder > 1){	
 		timerString += secondsRemainder + ' seconds';
 	}
 	
