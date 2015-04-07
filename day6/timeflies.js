@@ -6,11 +6,27 @@ var intervalID = setInterval(updateTime,500);
 
 function updateTime() {
 
+	var timerString = '';
+
 	// subtract current time from start time and round down (no decimal points)
 	var secondsPassed = Math.floor((Date.now() - start) / 1000)
+	var minutesPassed = Math.floor(secondsPassed / 60);
+	var secondsRemainder = Math.floor(secondsPassed % 60);
 	
-	// only start updating the HTML when it's been 2 seconds (because HTML says "1 second" until then)
-	if (secondsPassed > 1) {
-		document.getElementById('timer').innerHTML = secondsPassed + ' seconds';
+	// say "1 minute" singular, but then use "minutes" plural
+	if (minutesPassed == 1) {
+		timerString += minutesPassed + ' minute and ';
+	} else if (minutesPassed > 1){
+		timerString += minutesPassed + ' minutes and ';
 	}
+	
+	// say "1 second" singular, but then use plural "Seconds"
+	if (secondsRemainder == 1) {
+		timerString += secondsRemainder + ' second';
+	} else if (secondsRemainder == 0 || secondsRemainder > 1){	
+		timerString += secondsRemainder + ' seconds';
+	}
+	
+	// put the timer info into the HTML
+	document.getElementById('timer').innerHTML = timerString;
 }
