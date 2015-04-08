@@ -1,4 +1,4 @@
-// run drawGrid() each time startbtn is pressed
+// run drawGrid() each time the HTML element with ID startbtn is pressed
 document.getElementById('startbtn').addEventListener('click', drawGrid);
 
 function drawGrid() {
