@@ -1,0 +1,71 @@
+body {
+    margin: 60px auto;
+    width: 70%;
+    max-width: 950px;
+}
+nav ul, footer ul {
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+    padding: 0px;
+    list-style: none;
+    font-weight: bold;
+}
+nav ul li, footer ul li {
+    display: inline;
+    margin-right: 20px;
+}
+a {
+    text-decoration: none;
+    color: #999;
+}
+a:hover {
+    text-decoration: underline;
+}
+h1 {
+    font-size: 3em;
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+}
+p, button, input {
+    font-size: 1.5em;
+    line-height: 1.4em;
+    color: #333;
+	margin-bottom:1em;
+}
+footer {
+	clear:both;
+    border-top: 1px solid #d5d5d5;
+    font-size: .8em;
+}
+
+ul.posts { 
+    margin: 20px auto 40px; 
+    font-size: 1.5em;
+}
+
+ul.posts li {
+    list-style: none;
+}
+
+.box {
+	float:left;
+	width:30%;
+	padding:0 1.5% 0 1.5%;
+	font-size:0.9em;
+}
+
+@media (max-width: 1100px) {
+  .box{
+    width:45%;
+	padding: 0 2.5% 0 2.5%;
+  }
+  .boxthree{
+    width:100%;
+	padding: 0;
+  }
+}
+
+@media (max-width: 850px) {
+  .box{
+    width:100%;
+	padding: 0;
+  }
+}
