@@ -11,4 +11,5 @@ Website: http://learningnerd.github.io/30DaysOfWebDev/
 - [Day 6] (http://learningnerd.github.io/30DaysOfWebDev/day6/)
 - [Day 7] (http://learningnerd.github.io/30DaysOfWebDev/day7/)
 - [Day 8] (http://learningnerd.github.io/30DaysOfWebDev/day8/)
-- Day 9 (stay tuned!)
+- [Day 9] (http://learningnerd.github.io/30DaysOfWebDev/day9/)
+- Day 10 (stay tuned!)
