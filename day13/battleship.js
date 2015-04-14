@@ -1,4 +1,4 @@
-// this constructor function defines the Board class
+// this constructor function defines the BattleshipGame class, which runs the whole game
 function BattleshipGame(rows, cols, squareSize, gameUIContainer) {
 	this.rows = rows;
 	this.cols = cols;
@@ -55,7 +55,7 @@ function Ship(size) {
 	this.damage = 0;
 	this.coords = [];
 	
-	// coords array will contain [x,y] pairs for each square occupied (# of squares determined by size)
+	// 2d coords array will contain [x,y] coordinate pairs for each square occupied (# of squares determined by size)
 	for (i = 0; i < size; i++) {
 		this.coords.push([]);
 	}	
@@ -65,14 +65,14 @@ function Ship(size) {
 function createAndPlaceShip() {
 	// only run this function if game object already exists
 	if (typeof game != 'undefined') {
+		// ships have no size yet, they're all just 1 square! but I left this here for later
 		var size = parseInt(document.getElementById('shipsize').value);
-		console.log('in place ship of size function');
+
 		if (size < game.rows) {
 			// create a new ship, add it to game.ships
 			var ship = new Ship(size);
 			game.ships.push(ship);		
 			game.placeRandomShip(ship);
-			
 			console.log(game.ships);
 		} else {
 			alert('Invalid ship size. Enter a number from 1 to ' + game.rows);		
