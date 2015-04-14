@@ -6,7 +6,7 @@ function BattleshipGame(rows, cols, squareSize, gameUIContainer) {
 	this.board = [];
 	this.ships = [];
 	
-	// set up the game board and draw the UI
+	// set up the empty game board and draw the UI
 	for (i = 0; i < this.cols; i++) {
 		// create empty 2d array
 		this.board.push([]);
@@ -43,7 +43,7 @@ function BattleshipGame(rows, cols, squareSize, gameUIContainer) {
 		var y = Math.floor(Math.random() * this.cols);
 		
 		// save coords in ship object
-		ship.coords[i] = [x,y];
+		ship.coords[0] = [x,y];
 		// change color in game board UI
 		document.getElementById('s'+x+y).style.background = 'red';				
 	};
@@ -69,9 +69,10 @@ function createAndPlaceShip() {
 		var size = parseInt(document.getElementById('shipsize').value);
 
 		if (size < game.rows) {
-			// create a new ship, add it to game.ships
+			// create a new ship, add it to game.ships array
 			var ship = new Ship(size);
-			game.ships.push(ship);		
+			game.ships.push(ship);
+			// run function that generates ship's coordinates and displays it on the game board
 			game.placeRandomShip(ship);
 			console.log(game.ships);
 		} else {
