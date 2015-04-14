@@ -68,7 +68,7 @@ ul#days li {
 ul#days li.done {
 	background:#ccee99;
 }
-.missed {
+ul#days li.missed {
 	background:#e78e8e;
 }
 ul#days li:hover {
