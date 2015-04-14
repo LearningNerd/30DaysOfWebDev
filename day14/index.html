@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>30 Days of Web Dev - Day 14 - Recursive Randomness</title>
+		<!-- link to main stylesheet -->
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Press+Start+2P' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Old+Standard+TT' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+	<nav>
+    		<ul>
+        		<li><a href="../">Home</a></li>
+	        	<li><a href="#">About</a></li>
+        		<li><a href="#">Blog</a></li>
+    		</ul>
+	</nav>
+	<h1>Recursive Randomness</h1>	
+
+	<p>Building on <a href="../day13/">yesterday's</a> randomly-placed single squares, today I figured out how to randomly place battleships of various sizes on my grid! Now I can prevent them from overlapping, too! Not sure if I did it "right", but it seems to be working. This <a href="http://stackoverflow.com/questions/16337427/avoiding-dead-ends-in-battleships-random-placement-algorithm">StackOverflow thread</a> was really helpful.</p>
+	<p>And apparently I made a <a href="http://en.wikipedia.org/wiki/Recursion_(computer_science)">recursive function</a>. Don't think I've ever done that before!</p>
+	<div id="btns">
+	<input id="numrows" type="text" placeholder="Enter number of rows">
+		<input id="numcols" type="text" placeholder="Enter number of columns">
+		<button id="startbtn">Create Grid</button><br/>
+	<input id="shipsize" type="text" placeholder="Enter ship size (ex: 3)"><button id="placeship">Randomly Place Ship</button>
+	</div>
+	<div id="gameboard">
+	</div>
+	
+	<footer>
+    	<ul>
+        	<li><a href="https://github.com/LearningNerd/">GitHub</a></li>
+        	<li><a href="https://twitter.com/LearningNerd">Twitter</a></li>
+        	<li><a href="https://plus.google.com/+LizKrane">Google+</a></li>
+        	<li><a href="http://www.learningnerd.com/">Website</a></li>
+        	<li><a href="https://www.youtube.com/user/LearningNerd">YouTube</a></li>
+	</ul>
+	</footer>
+	<script type="text/javascript" src="battleship.js"></script>
+	</body>
+</html>
