@@ -72,6 +72,7 @@ ul#days a:hover li {
 	background:#eecc99;
 	font-size:1.4em;
 }
-ul#days li.missed {
+ul#days a:hover li.missed {
 	background:#e78e8e;
+	font-size:1.4em;
 }
