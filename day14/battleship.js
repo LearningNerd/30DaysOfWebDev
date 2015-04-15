@@ -75,15 +75,15 @@ function BattleshipGame(rows, cols, squareSize, gameUIContainer) {
 		console.log('Determined that this ship will fit on the board.');
 		// save ship's coordinates to ship object and board object
 		ship = testShip;
-		// pick a random color for each ship. code via https://css-tricks.com/snippets/javascript/random-hex-color/
-		var randomColor = Math.floor(Math.random()*16777215).toString(16);
+		// pick a random color for each ship. code via http://stackoverflow.com/a/5092872
+		var randomHexColor = "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);});
 		// place ship on board object, represented by a 1 for each of the ship's coordinate locations
 		for (i = 0; i < ship.coords.length; i++) {		
 			var x = ship.coords[i][0];
 			var y = ship.coords[i][1];
 			this.board[x][y] = 1;					
-			// display ship on game board UI
-			document.getElementById('s'+x+'-'+y).style.background = '#' + randomColor;
+			// display ship on game board UI			
+			document.getElementById('s'+x+'-'+y).style.background = randomHexColor;
 			console.log('Placed ship square ' + i + ' at ' + x + ', ' + y)
 		}
 		console.log('Ship of size ' + ship.coords.length + ' successfully placed on the board!')
