@@ -68,10 +68,12 @@ ul#days li {
 ul#days li.done {
 	background:#ccee99;
 }
-ul#days a:hover li {
-	background:#eecc99;
-	font-size:1.4em;
-}
 ul#days li.missed {
 	background:#e78e8e;
+}
+ul#days li:hover {
+	font-size:1.4em;
+}
+ul#days a:hover li {
+	background:#eecc99;
 }
