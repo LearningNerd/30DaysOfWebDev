@@ -18,4 +18,5 @@ Website: http://learningnerd.github.io/30DaysOfWebDev/
 - [Day 13] (http://learningnerd.github.io/30DaysOfWebDev/day13/)
 - [Day 14] (http://learningnerd.github.io/30DaysOfWebDev/day14/)
 - [Day 15] (http://learningnerd.github.io/30DaysOfWebDev/day15/)
-- Day 16 (Stay tuned!)
+- Day 16 - Missed another day. Oops! But I still learned a lot.
+- [Day 17] (http://learningnerd.github.io/30DaysOfWebDev/day17/)
