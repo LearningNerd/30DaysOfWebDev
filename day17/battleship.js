@@ -1,5 +1,5 @@
 // this constructor function defines the BattleshipGame class, which runs the whole game
-function BattleshipGame(rows, cols, gameUIContainer, alertsContainer) {
+function BattleshipGame(rows, cols, gameBoardContainer, alertsContainer) {
 	this.board = [];
 	this.ships = [];
 	this.hitCount = 0;
@@ -27,7 +27,7 @@ function BattleshipGame(rows, cols, gameUIContainer, alertsContainer) {
 			this.board[i].push(0);
 			// create a new HTML element for each grid square and make it the right size
 			var square = document.createElement("div");
-			gameUIContainer.appendChild(square);
+			gameBoardContainer.appendChild(square);
 			
 			// set each element's id to the format 's01'			
 			square.id = 's' + i + '-' + j;
@@ -40,9 +40,9 @@ function BattleshipGame(rows, cols, gameUIContainer, alertsContainer) {
 			square.style.width = squareSize + 'px';
 			square.style.height = squareSize + 'px';
 			
-			// set gameUIcontainer size based on square size, rows and cols
-			gameUIContainer.style.width = (squareSize * cols) + 'px';
-			gameUIContainer.style.height = (squareSize * rows) + 'px';			
+			// set gameBoardContainer size based on square size, rows and cols
+			gameBoardContainer.style.width = (squareSize * cols) + 'px';
+			gameBoardContainer.style.height = (squareSize * rows) + 'px';			
 		}
 	}
 	
@@ -148,6 +148,11 @@ function BattleshipGame(rows, cols, gameUIContainer, alertsContainer) {
 		return false;
 	};
 	
+	// prevent user from clicking the board after game is over
+	this.end = function() {		
+		gameBoardContainer.removeEventListener("click", onBoardClick, false);
+	};
+	
 	// run this method when user clicks on the game board
 	// boilerplate code via http://www.kirupa.com/html5/handling_events_for_many_elements.htm
 	this.fireTorpedo = function (e) {	
@@ -190,6 +195,7 @@ function BattleshipGame(rows, cols, gameUIContainer, alertsContainer) {
 				console.log('currentShip.damage: ' + currentShip.damage);				
 				if (this.shipsRemaining == 0) {
 					newMessage = "<br/><strong>All enemy battleships have been defeated! You win!</strong>";
+					this.end(); // end the game, don't allow any more clicks on the board
 				}
 			// if player clicks a square that's been previously hit, let them know
 			} else if (this.board[row][col] > 1) {
@@ -233,6 +239,12 @@ function Ship(size) {
 // global game variable, which will be modified by other functions
 var game;
 
+// function to use in addEventListener -- it needed a name so I can later use removeEventHandler
+// there's probably a better way to do this, which I'll look into later
+var onBoardClick = function (e) {
+	return game.fireTorpedo(e);
+};
+
 function setupGame(e) {
 	// get game board container element
 	var gameBoardContainer = document.getElementById('gameboard');
@@ -254,7 +266,7 @@ function setupGame(e) {
 	e.target.innerHTML = 'Restart Game';
 	game.alerts.displayMessage('Click the board to fire!');
 	// set event listener for all elements in gameboard, run fireTorpedo function when square is clicked
-	gameBoardContainer.addEventListener("click", function (e) {return game.fireTorpedo(e);}, false);
+	gameBoardContainer.addEventListener("click", onBoardClick, false);
 }
 
 // set event listeners so clicking buttons will run functions:
