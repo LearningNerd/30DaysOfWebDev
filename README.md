@@ -19,4 +19,6 @@ Website: http://learningnerd.github.io/30DaysOfWebDev/
 - [Day 14: Recursive Randomness] (http://learningnerd.github.io/30DaysOfWebDev/day14/)
 - [Day 15: Working Battleship] (http://learningnerd.github.io/30DaysOfWebDev/day15/)
 - Day 16 - Missed another day. Oops! But I still learned a lot.
-- [Day 17: More Battleship (in progress!)] (http://learningnerd.github.io/30DaysOfWebDev/day17/)
+- [Day 17: Basic Working Battleship!] (http://learningnerd.github.io/30DaysOfWebDev/day17/)
+- [Day 18: Ruby on Rails] (http://learningnerd.github.io/30DaysOfWebDev/day18/)
+- Day 19 - stay tuned!
