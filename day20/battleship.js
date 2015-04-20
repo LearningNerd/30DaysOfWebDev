@@ -275,12 +275,15 @@ function setupGame(e) {
 
 function testPlacementAlgorithm(x, y, speed)
 {
-	if (y < game.board.length) {
-		var currentSquare = document.getElementById('s' + x + '-' + y);	
-		currentSquare.style.border = '5px solid red';
-		console.log('x = ' + x + ', y = ' + y);
-		console.log('speed = ' + speed);
-		setTimeout(function(){return testPlacementAlgorithm(x, y+1, speed);}, speed);
+	if (x < game.board.length) {
+		if (y < game.board[0].length) {
+			var currentSquare = document.getElementById('s' + x + '-' + y);	
+			currentSquare.style.border = '5px solid red';
+			console.log('x = ' + x + ', y = ' + y);
+			setTimeout(function(){return testPlacementAlgorithm(x, y+1, speed);}, speed);
+		} else {
+			setTimeout(function(){return testPlacementAlgorithm(x+1, 0, speed);}, speed);
+		}		
 	}
 }
 
