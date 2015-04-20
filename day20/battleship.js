@@ -273,18 +273,73 @@ function setupGame(e) {
 	// gameBoardContainer.addEventListener("click", onBoardClick, false);
 }
 
-function testPlacementAlgorithm(x, y, speed)
-{
-	if (x < game.board.length) {
-		if (y < game.board[0].length) {
-			var currentSquare = document.getElementById('s' + x + '-' + y);	
-			currentSquare.style.border = '5px solid red';
-			console.log('x = ' + x + ', y = ' + y);
-			setTimeout(function(){return testPlacementAlgorithm(x, y+1, speed);}, speed);
-		} else {
-			setTimeout(function(){return testPlacementAlgorithm(x+1, 0, speed);}, speed);
-		}		
+// reset board visualization so animation can be run again
+function resetAnimation() {	
+	for (i = 0; i < game.board.length; i++) {	
+		for (j = 0; j < game.board[0].length; j++) {
+			// revert to default border defined in style.css
+			document.getElementById('s'+i+'-'+j).style.border = '';						
+		}
 	}
+}
+
+function startAnimation() {
+	resetAnimation();
+	var speed = parseInt(document.getElementById('speed').value);
+	var shipSize = 5; // test placement of a ship of size 3 **TODO: user input for this
+	var consecutiveEmptySquares = [];
+	var possibleShipLocations = [];
+	testPlacementAlgorithm(0, 0, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);
+	console.log('Starting placement algorithm. Ship size:' + shipSize + '. Animation speed: ' + speed + ' milliseconds.');
+}
+
+// run and visualize algorithm for placing ships on the board
+function testPlacementAlgorithm(x, y, speed, shipSize, consecutiveEmptySquares, possibleShipLocations)
+{	
+	var message; // use this to hold info to display in HTML
+	var currentSquare = document.getElementById('s' + x + '-' + y);
+	// recursively check each square, rows then columns
+	if (x < game.board.length) {		
+		if (y < game.board[0].length) {			
+			currentSquare.style.border = '2px dotted red';
+			message = 'x = ' + x + ', y = ' + y;
+			// if this square is empty, save its coordinates to consecutiveEmptySquares array
+			if (game.board[x][y] == 0) {
+				consecutiveEmptySquares.push([x, y]);
+				message += ' | Empty square! Consecutive empty squares: ' + consecutiveEmptySquares.length;	
+
+				// if we have [shipSize] number of consecutive empty squares, add to possibleShipLocations array, reset consecutiveEmptySquares
+				if (consecutiveEmptySquares.length == shipSize) {				
+					possibleShipLocations.push(consecutiveEmptySquares);					
+					message += "</br>Number of possible locations for this ship: " + possibleShipLocations.length;
+					
+					// recolor squares where ship can be placed:
+					for (i = 0; i < consecutiveEmptySquares.length; i++) {						
+						document.getElementById('s' + consecutiveEmptySquares[i][0] + '-' + consecutiveEmptySquares[i][1]).style.border = '2px solid orange';													
+					}
+					
+					// reset to check for next possible ship placements
+					consecutiveEmptySquares = [];
+				}
+				
+			} else {
+				// if square is not empty, reset consecutiveEmptySquares
+				consecutiveEmptySquares = [];
+				message += " | There's a ship here!";				
+			}
+						
+			console.log('consecutiveEmptySquares: ');
+			console.log(consecutiveEmptySquares);
+			console.log('possibleShipLocations:');
+			console.log(possibleShipLocations);
+			game.alerts.displayMessage(message);			
+			setTimeout(function(){return testPlacementAlgorithm(x, y+1, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);}, speed);
+		} else {
+			// at the end of each row, reset consecutiveEmptySquares (because ships can't span multiple rows!)
+			consecutiveEmptySquares = [];
+			setTimeout(function(){return testPlacementAlgorithm(x+1, 0, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);}, speed);
+		}		
+	}	
 }
 
 
@@ -294,5 +349,5 @@ function testPlacementAlgorithm(x, y, speed)
 // document.getElementById('displayships').addEventListener('click', function () {game.displayShips();});
 
 // for testing algorithm:
-document.getElementById('startbtn').addEventListener('click', function() {return testPlacementAlgorithm(0,0,parseInt(document.getElementById('speed').value));});
 setupGame();
+document.getElementById('startbtn').addEventListener('click', startAnimation);
