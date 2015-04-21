@@ -261,6 +261,14 @@ function setupGame(e) {
 	game.createShip(3);
 	game.createShip(4);
 	game.createShip(5);
+	// extra ships just for fun!
+	game.createShip(2);
+	game.createShip(2);
+	game.createShip(2);
+	game.createShip(3);
+	game.createShip(3);
+	game.createShip(4);
+	game.createShip(5);
 
 	// for testing purposes, display all the ships on the board
 	game.displayShips();
@@ -311,7 +319,7 @@ function testPlacementAlgorithm(x, y, speed, shipSize, consecutiveEmptySquares, 
 				// if we have [shipSize] number of consecutive empty squares, add to possibleShipLocations array, reset consecutiveEmptySquares
 				if (consecutiveEmptySquares.length == shipSize) {				
 					possibleShipLocations.push(consecutiveEmptySquares);					
-					message += "</br>Number of possible locations for this ship: " + possibleShipLocations.length;
+					document.getElementById('message2').innerHTML = "Number of possible locations for this ship: <strong>" + possibleShipLocations.length + '</strong>';
 					
 					// recolor squares where ship can be placed:
 					for (i = 0; i < consecutiveEmptySquares.length; i++) {						
@@ -332,7 +340,7 @@ function testPlacementAlgorithm(x, y, speed, shipSize, consecutiveEmptySquares, 
 			console.log(consecutiveEmptySquares);
 			console.log('possibleShipLocations:');
 			console.log(possibleShipLocations);
-			game.alerts.displayMessage(message);			
+			game.alerts.displayMessage(message);
 			setTimeout(function(){return testPlacementAlgorithm(x, y+1, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);}, speed);
 		} else {
 			// at the end of each row, reset consecutiveEmptySquares (because ships can't span multiple rows!)
