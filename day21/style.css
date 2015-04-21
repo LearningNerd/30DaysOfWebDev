@@ -59,11 +59,11 @@ ul.posts li {
 	border: 1px solid #ddd;
 }
 
-#btns, #message, #message2 {
+#btns, .message{
 	text-align:center;
 }
 
-#message, #message2 {
+.message {
 	font-family:'Helvetica', 'Arial', 'Sans-Serif';
     color: #333;
 }
