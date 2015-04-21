@@ -21,4 +21,6 @@ Website: http://learningnerd.github.io/30DaysOfWebDev/
 - Day 16 - Missed another day. Oops! But I still learned a lot.
 - [Day 17: Basic Working Battleship!] (http://learningnerd.github.io/30DaysOfWebDev/day17/)
 - [Day 18: Ruby on Rails] (http://learningnerd.github.io/30DaysOfWebDev/day18/)
-- Day 19 - stay tuned!
+- Day 19 - Missed another day. Too exhausted from Rails Girls yesterday!
+- [Day 20] (http://learningnerd.github.io/30DaysOfWebDev/day20/)
+- Day 21 - stay tuned!
