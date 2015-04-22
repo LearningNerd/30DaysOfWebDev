@@ -206,6 +206,45 @@ function BattleshipGame(rows, cols, gameBoardContainer, alertsContainer) {
 		}
 		e.stopPropagation();
 	};
+	
+	this.testNewAlgorithm = function () {		
+		if (possibleShipLocations.length == 0 && runHorizCheck == true && runVertCheck == true) {
+			this.alerts.displayMessage('Nowhere left to place the ship!');
+			return;
+		} else if (possibleShipLocations.length == 0) {
+			this.alerts.displayMessage('Try running the other algorithm first.');
+		}
+		console.log('called testNewAlgorithm');
+		// pick a random entry from possibleShipLocations
+		var randomIndex = Math.floor(Math.random() * possibleShipLocations.length);
+		var chosenShipCoords = possibleShipLocations[randomIndex];
+		console.log('randomIndex = ' + randomIndex);
+		// create a new ship, add it to game.ships array
+		var ship = new Ship(chosenShipCoords.length);
+		this.ships.push(ship);
+		this.shipsRemaining++;
+				
+		// place the ship on the board
+		for (i = 0; i < chosenShipCoords.length; i++) {								
+			var x = chosenShipCoords[i][0];
+			var y = chosenShipCoords[i][1];
+			this.board[x][y] = 1;								
+			console.log('Placed ship square ' + i + ' at ' + x + ', ' + y)
+			// display ship right away, for testing
+			document.getElementById('s'+x+'-'+y).style.background = ship.color;
+		}		
+				
+		console.log('Number of ships on the board: ' + this.ships.length)
+		console.log(this.ships);	
+		
+		// remove chosen location from possibleShipLocations
+		possibleShipLocations.splice(randomIndex, 1);
+		console.log('possibleShipLocations:');
+		console.log(possibleShipLocations);
+		
+		// update count in HTML
+		document.getElementById('message2').innerHTML = "Possible remaining locations for this ship: <strong>" + possibleShipLocations.length + '</strong>';
+	};
 }
 
 // constructor for the Ship class
@@ -240,6 +279,8 @@ function Ship(size) {
 var game;
 // global variable to save list of possible ship locations, for use between functions while I test it out
 var possibleShipLocations = [];
+var runHorizCheck = false;
+var runVertCheck = false;
 
 // function to use in addEventListener -- it needed a name so I can later use removeEventHandler
 // *** commented out for now, while I test the new ship placement algorithm
@@ -329,7 +370,7 @@ function testPlacementAlgorithmHorizontal(x, y, speed, shipSize, consecutiveEmpt
 				// if we have [shipSize] number of consecutive empty squares, add to possibleShipLocations array, reset consecutiveEmptySquares
 				if (consecutiveEmptySquares.length == shipSize) {				
 					possibleShipLocations.push(consecutiveEmptySquares);					
-					document.getElementById('message2').innerHTML = "Places found where the ship can fit: <strong>" + possibleShipLocations.length + '</strong>';
+					document.getElementById('message2').innerHTML = "Possible remaining locations for this ship: <strong>" + possibleShipLocations.length + '</strong>';
 					
 					// recolor squares where ship can be placed:
 					for (i = 0; i < consecutiveEmptySquares.length; i++) {						
@@ -355,6 +396,7 @@ function testPlacementAlgorithmHorizontal(x, y, speed, shipSize, consecutiveEmpt
 		} else {
 			// at the end of each row, reset consecutiveEmptySquares (because ships can't span multiple rows!)
 			consecutiveEmptySquares = [];
+			runHorizCheck = true;
 			setTimeout(function(){return testPlacementAlgorithmHorizontal(x+1, 0, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);}, speed);
 		}		
 	}
@@ -404,6 +446,7 @@ function testPlacementAlgorithmVertical(x, y, speed, shipSize, consecutiveEmptyS
 		} else {
 			// at the end of each row, reset consecutiveEmptySquares (because ships can't span multiple rows!)
 			consecutiveEmptySquares = [];
+			runVertCheck = true;
 			setTimeout(function(){return testPlacementAlgorithmVertical(0, y+1, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);}, speed);
 		}		
 	}
@@ -418,3 +461,4 @@ function testPlacementAlgorithmVertical(x, y, speed, shipSize, consecutiveEmptyS
 setupGame();
 document.getElementById('checkhoriz').addEventListener('click', startAnimationHorizontal);
 document.getElementById('checkvert').addEventListener('click', startAnimationVertical);
+document.getElementById('placeship').addEventListener('click', function() {return game.testNewAlgorithm();});
