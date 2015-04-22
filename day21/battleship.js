@@ -238,6 +238,8 @@ function Ship(size) {
 
 // global game variable, which will be modified by other functions
 var game;
+// global variable to save list of possible ship locations, for use between functions while I test it out
+var possibleShipLocations = [];
 
 // function to use in addEventListener -- it needed a name so I can later use removeEventHandler
 // *** commented out for now, while I test the new ship placement algorithm
@@ -296,7 +298,6 @@ function startAnimationHorizontal() {
 	var speed = parseInt(document.getElementById('speed').value);
 	var shipSize = parseInt(document.getElementById('size').value);
 	var consecutiveEmptySquares = [];
-	var possibleShipLocations = [];
 	testPlacementAlgorithmHorizontal(0, 0, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);
 	console.log('Starting horizontal placement algorithm. Ship size:' + shipSize + '. Animation speed: ' + speed + ' milliseconds.');
 }
@@ -306,9 +307,8 @@ function startAnimationVertical() {
 	var speed = parseInt(document.getElementById('speed').value);
 	var shipSize = parseInt(document.getElementById('size').value);
 	var consecutiveEmptySquares = [];
-	var possibleShipLocations = [];
 	testPlacementAlgorithmVertical(0, 0, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);
-	console.log('Starting vertical placement algorithm. Ship size:' + shipSize + '. Animation speed: ' + speed + ' milliseconds.');
+	console.log('Starting vertical placement algorithm. Ship size:' + shipSize + '. Animation speed: ' + speed + ' milliseconds.');		
 }
 
 // run and visualize algorithm for placing ships on the board horizontally
@@ -319,7 +319,7 @@ function testPlacementAlgorithmHorizontal(x, y, speed, shipSize, consecutiveEmpt
 	// recursively check each square, rows then columns
 	if (x < game.board.length) {		
 		if (y < game.board[0].length) {			
-			currentSquare.style.border = '2px dotted red';
+			currentSquare.style.border = '2px dotted #333';
 			message = 'x = ' + x + ', y = ' + y;
 			// if this square is empty, save its coordinates to consecutiveEmptySquares array
 			if (game.board[x][y] == 0) {
@@ -329,11 +329,11 @@ function testPlacementAlgorithmHorizontal(x, y, speed, shipSize, consecutiveEmpt
 				// if we have [shipSize] number of consecutive empty squares, add to possibleShipLocations array, reset consecutiveEmptySquares
 				if (consecutiveEmptySquares.length == shipSize) {				
 					possibleShipLocations.push(consecutiveEmptySquares);					
-					document.getElementById('message2').innerHTML = "Ship can fit horizontally in <strong>" + possibleShipLocations.length + '</strong> places.';
+					document.getElementById('message2').innerHTML = "Places found where the ship can fit: <strong>" + possibleShipLocations.length + '</strong>';
 					
 					// recolor squares where ship can be placed:
 					for (i = 0; i < consecutiveEmptySquares.length; i++) {						
-						document.getElementById('s' + consecutiveEmptySquares[i][0] + '-' + consecutiveEmptySquares[i][1]).style.border = '2px solid orange';													
+						document.getElementById('s' + consecutiveEmptySquares[i][0] + '-' + consecutiveEmptySquares[i][1]).style.border = '2px dotted red';													
 					}
 					
 					// reset to check for next possible ship placements
@@ -357,7 +357,7 @@ function testPlacementAlgorithmHorizontal(x, y, speed, shipSize, consecutiveEmpt
 			consecutiveEmptySquares = [];
 			setTimeout(function(){return testPlacementAlgorithmHorizontal(x+1, 0, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);}, speed);
 		}		
-	}	
+	}
 }
 
 // run and visualize algorithm for placing ships on the board horizontally
@@ -368,7 +368,7 @@ function testPlacementAlgorithmVertical(x, y, speed, shipSize, consecutiveEmptyS
 	// recursively check each square, rows then columns
 	if (y < game.board[0].length) {		
 		if (x < game.board.length) {			
-			currentSquare.style.border = '2px dotted red';
+			currentSquare.style.border = '2px dotted #333';
 			message = 'x = ' + x + ', y = ' + y;
 			// if this square is empty, save its coordinates to consecutiveEmptySquares array
 			if (game.board[x][y] == 0) {
@@ -378,11 +378,11 @@ function testPlacementAlgorithmVertical(x, y, speed, shipSize, consecutiveEmptyS
 				// if we have [shipSize] number of consecutive empty squares, add to possibleShipLocations array, reset consecutiveEmptySquares
 				if (consecutiveEmptySquares.length == shipSize) {				
 					possibleShipLocations.push(consecutiveEmptySquares);					
-					document.getElementById('message3').innerHTML = "Ship can fit vertically in <strong>" + possibleShipLocations.length + '</strong> places.';
+					document.getElementById('message2').innerHTML = "Places found where the ship can fit: <strong>" + possibleShipLocations.length + '</strong>';
 					
 					// recolor squares where ship can be placed:
 					for (i = 0; i < consecutiveEmptySquares.length; i++) {						
-						document.getElementById('s' + consecutiveEmptySquares[i][0] + '-' + consecutiveEmptySquares[i][1]).style.border = '2px solid orange';													
+						document.getElementById('s' + consecutiveEmptySquares[i][0] + '-' + consecutiveEmptySquares[i][1]).style.border = '2px dotted red';													
 					}
 					
 					// reset to check for next possible ship placements
@@ -406,7 +406,7 @@ function testPlacementAlgorithmVertical(x, y, speed, shipSize, consecutiveEmptyS
 			consecutiveEmptySquares = [];
 			setTimeout(function(){return testPlacementAlgorithmVertical(0, y+1, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);}, speed);
 		}		
-	}	
+	}
 }
 
 // set event listeners so clicking buttons will run functions:
