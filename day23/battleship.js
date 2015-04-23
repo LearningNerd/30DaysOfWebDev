@@ -302,23 +302,25 @@ function setupGame(e) {
 	// gameBoardContainer.addEventListener("click", onBoardClick, false);
 }
 
-// reset board visualization so animation can be run again
-function resetAnimation() {	
-	for (i = 0; i < game.board.length; i++) {	
-		for (j = 0; j < game.board[0].length; j++) {
-			// revert to default border defined in style.css
-			document.getElementById('s'+i+'-'+j).style.border = '';						
-		}
-	}
-}
-
-function startAnimation() {
-	resetAnimation();
-	//var speed = parseInt(document.getElementById('speed').value);
+function placeOneShip() {	
 	var size = parseInt(document.getElementById('size').value);		
-	console.log('Starting placement algorithm. Ship size:' + size);	
 	game.placeRandomShip(size);		
 	game.displayShips();
+}
+
+function placeFiveStandardShips() {		
+	game.placeRandomShip(5);
+	game.placeRandomShip(4);		
+	game.placeRandomShip(3);		
+	game.placeRandomShip(3);		
+	game.placeRandomShip(2);		
+	game.displayShips();
+	game.msg1.displayMessage('Randomly placed: carrier (size 5), battleship (size 4), destroyer (size 3), submarine (size 3), and patrol boat (size 2) according to <a href="http://www.hasbro.com/common/instruct/BattleShip_(2002).PDF">official Hasbro rules (PDF)</a>.');
+}
+
+function resetGame () {
+	setupGame();
+	game.msg1.displayMessage('Reset the game board.');
 }
 
 // set event listeners so clicking buttons will run functions:
@@ -328,4 +330,6 @@ function startAnimation() {
 
 // for testing algorithm:
 setupGame();
-document.getElementById('placeship').addEventListener('click', startAnimation);
+document.getElementById('placeship').addEventListener('click', placeOneShip);
+document.getElementById('hasbrosetup').addEventListener('click', placeFiveStandardShips);
+document.getElementById('reset').addEventListener('click', resetGame);
