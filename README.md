@@ -24,4 +24,6 @@ Website: http://learningnerd.github.io/30DaysOfWebDev/
 - Day 19 - Missed another day. Too exhausted from Rails Girls yesterday!
 - [Day 20: Animated Algorithm] (http://learningnerd.github.io/30DaysOfWebDev/day20/)
 - [Day 21: More Algorithmic Adventures] (http://learningnerd.github.io/30DaysOfWebDev/day21/)
-- Day 22 - stay tuned!
+- Day 22 - Missed yet another day. I was just lazy. =P
+- [Day 23: Final Algorithm] (http://learningnerd.github.io/30DaysOfWebDev/day23/)
+- Day 24 - stay tuned!
