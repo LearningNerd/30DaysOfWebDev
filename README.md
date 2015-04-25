@@ -26,4 +26,5 @@ Website: http://learningnerd.github.io/30DaysOfWebDev/
 - [Day 21: More Algorithmic Adventures] (http://learningnerd.github.io/30DaysOfWebDev/day21/)
 - Day 22 - Missed yet another day. I was just lazy. =P
 - [Day 23: Final Algorithm] (http://learningnerd.github.io/30DaysOfWebDev/day23/)
-- Day 24 - stay tuned!
+- [Day 24: CSS Layouts] (http://learningnerd.github.io/30DaysOfWebDev/day24/)
+- Day 25 - stay tuned!
