@@ -1,2 +1,4 @@
 name: 30 Days of Web Dev
 markdown: kramdown
+pygments: true
+baseurl: /30DaysOfWebDev
