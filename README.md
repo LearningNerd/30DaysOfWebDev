@@ -28,4 +28,5 @@ Website: http://learningnerd.github.io/30DaysOfWebDev/
 - [Day 23: Final Algorithm] (http://learningnerd.github.io/30DaysOfWebDev/day23/)
 - [Day 24: CSS Layouts] (http://learningnerd.github.io/30DaysOfWebDev/day24/)
 - [Day 25: Using Jekyll] (http://learningnerd.github.io/30DaysOfWebDev/day25/)
-- Day 26 - stay tuned!
+- [Day 26: Vertical Rhythm] (http://learningnerd.github.io/30DaysOfWebDev/day26/)
+- Day 27 - stay tuned!
