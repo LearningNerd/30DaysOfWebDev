@@ -1,0 +1,28 @@
+body {
+    margin: 2em auto;
+	width:90%;
+    max-width: 900px;
+    font-family:'Georgia', serif;
+	font-size: 20px;
+	background: #fff url(24px.png);
+}
+
+p {
+	font-size: 1em;
+	line-height:1.2em;
+	margin-top: 1.2em;
+	margin-bottom:1.2em;
+}
+
+h1 {
+	font-size:1.8em;
+	line-height:1em;
+	margin-top:0.5em;
+	margin-bottom:0.5em;
+}
+h2 {
+	font-size:1.2em;
+	line-height:1em;
+	margin-top:1em;
+	margin-bottom:1em;
+}
