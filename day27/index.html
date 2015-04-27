@@ -1,0 +1,17 @@
+---
+layout: default
+title: Day 27 - Countdown Timer
+javascriptfile: timer
+---
+	<h1>Countdown Timer</h1>	
+
+	<p>A long time ago, I made <a href="https://play.google.com/store/apps/details?id=edu.usc.ekrane.todotimer&hl=en">my own Android app</a> based on the <a href="http://pomodorotechnique.com/">Pomodoro Technique</a> -- the general idea is to do focused work for a chunk of time (usually 25 minutes), followed by a 5 minute break. So today I thought I'd try to make a little pomodoro timer with JavaScript! So far it's just a simple countdown timer.</p>		
+	<div style="text-align:center;">
+		<label for="time"> Set timer for </label>
+		<input style="width:5em;" id="time" type="text" value="25" /> <label for="time"> minutes. </label>
+		<button id="start">Start</button>
+		<button id="reset">Reset</button>
+	</div>
+	<p style="text-align:center;font-size:150px;margin:0;">	
+	<span id="timer">00:00</span>
+	</p>	
