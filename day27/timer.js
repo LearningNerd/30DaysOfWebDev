@@ -6,6 +6,8 @@ document.getElementById('start').addEventListener('click', startTimer);
 document.getElementById('reset').addEventListener('click', resetTimer);
 
 function startTimer () {
+//
+	document.getElementById('timer').style.color = '';
 	// if timer is paused, start it!
 	if (timerPaused) {		
 		// if timer is being started (not resumed), initialize w/ user input
