@@ -86,6 +86,26 @@ function updateTimerButtons() {
 	document.getElementById('reset').innerHTML = timerPaused ? 'Reset ' + timerModeString + ' Timer' : 'Reset ' + timerModeString + ' Timer';
 }
 
+function displayTimer() {
+	// get minutes and seconds remaining, rounding down with Math.floor
+	var secondsRemaining = Math.floor(remainingMilliseconds / 1000)
+	var minutesRemaining = Math.floor(secondsRemaining / 60);
+	var secondsRemainder = Math.floor(secondsRemaining % 60);
+	
+	// format timer as mm:ss. examples: 00:00, 00:09, 00:57, 02:30, 15:07
+	if (minutesRemaining < 10) {
+		timerString += '0'
+	} 	
+	timerString += minutesRemaining + ':';		
+	if (secondsRemainder < 10) {
+		timerString += '0';
+	}	
+	timerString += secondsRemainder;
+
+	// display the timer in the HTML
+	document.getElementById('timer').innerHTML = timerString;
+}
+
 function updateTimer() {
 	var timerString = '';
 	
@@ -115,23 +135,7 @@ function updateTimer() {
 		return;
 	}
 	
-	// get minutes and seconds remaining, rounding down with Math.floor
-	var secondsRemaining = Math.floor(remainingMilliseconds / 1000)
-	var minutesRemaining = Math.floor(secondsRemaining / 60);
-	var secondsRemainder = Math.floor(secondsRemaining % 60);
-	
-	// format timer as mm:ss. examples: 00:00, 00:09, 00:57, 02:30, 15:07
-	if (minutesRemaining < 10) {
-		timerString += '0'
-	} 	
-	timerString += minutesRemaining + ':';		
-	if (secondsRemainder < 10) {
-		timerString += '0';
-	}	
-	timerString += secondsRemainder;
-
-	// display the timer in the HTML
-	document.getElementById('timer').innerHTML = timerString;
+	displayTimer();
 }
 
 // code via http://diveintohtml5.info/storage.html
@@ -179,7 +183,7 @@ function resumeState() {
 	
 	updateTimerButtons();
 	
-	document.getElementById('timer').innerHTML = 'RESUMING';
+	displayTimer();
 	
 	userSetMilliseconds -= elapsedMilliseconds;
 	
