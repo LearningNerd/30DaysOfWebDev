@@ -1,5 +1,5 @@
 // some global variables to use between the timer functions
-var intervalID, startTime, userSetMilliseconds, elapsedMilliseconds = 0, timerPaused = true;
+var intervalID, startTime, userSetMilliseconds, elapsedMilliseconds = 0, timerPaused = true, timerWorkMode = true;
 
 // set event listeners for each button
 document.getElementById('start').addEventListener('click', startTimer);
@@ -26,8 +26,7 @@ function startTimer () {
 	}	
 	// toggle timerPaused
 	timerPaused = !timerPaused;
-	// update button text
-	document.getElementById('start').innerHTML = timerPaused ? 'Start' : 'Pause';
+	updateTimerButtons();
 }
 
 function resetTimer() {
@@ -35,9 +34,25 @@ function resetTimer() {
 	userSetMilliseconds = 0;
 	elapsedMilliseconds = 0;
 	timerPaused = true;
-	document.getElementById('start').innerHTML = 'Start';
+	updateTimerButtons();
 	document.getElementById('timer').innerHTML = '00:00';
 	document.getElementById('timer').style.color = '';
+}
+
+function startBreak () {
+	document.getElementById('time').value = '5';
+	updateTimerButtons();
+}
+
+function startWork () {
+	document.getElementById('time').value = '25';
+	updateTimerButtons();
+}
+
+function updateTimerButtons() {
+	var timerModeString = timerWorkMode ? 'Work' : 'Break';	
+	document.getElementById('start').innerHTML = timerPaused ? 'Start ' + timerModeString + ' Timer' : 'Pause ' + timerModeString + ' Timer';
+	document.getElementById('reset').innerHTML = timerPaused ? 'Reset ' + timerModeString + ' Timer' : 'Reset ' + timerModeString + ' Timer';
 }
 
 function updateTimer() {
@@ -48,10 +63,19 @@ function updateTimer() {
 
 	// if the timer is up, stop the timer and show a message
 	if (remainingMilliseconds <= 0) {
-		clearInterval(intervalID);
-		document.getElementById('timer').innerHTML = "Time's up!";
+		resetTimer();
+		// toggle mode from work to break or break to work
+		timerWorkMode = !timerWorkMode;
+		updateTimerButtons()
+		var timerModeString = timerWorkMode ? 'Time to get back to work!' : 'Time to take a break!';
+		document.getElementById('timer').innerHTML = timerModeString;
 		document.getElementById('timer').style.color = 'red';
-		alert("Time's up!!!");
+		document.getElementById('timer').style.fontSize = '70px';
+		if (!timerWorkMode) { // if now beginning a break, then start work! otherwise, start break
+			startBreak();
+		} else {
+			startWork();
+		}		
 		return;
 	}
 	
