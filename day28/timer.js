@@ -86,7 +86,8 @@ function updateTimerButtons() {
 	document.getElementById('reset').innerHTML = timerPaused ? 'Reset ' + timerModeString + ' Timer' : 'Reset ' + timerModeString + ' Timer';
 }
 
-function displayTimer() {
+function displayTimer(remainingMilliseconds) {
+	var timerString = '';
 	// get minutes and seconds remaining, rounding down with Math.floor
 	var secondsRemaining = Math.floor(remainingMilliseconds / 1000)
 	var minutesRemaining = Math.floor(secondsRemaining / 60);
@@ -106,9 +107,7 @@ function displayTimer() {
 	document.getElementById('timer').innerHTML = timerString;
 }
 
-function updateTimer() {
-	var timerString = '';
-	
+function updateTimer() {	
 	elapsedMilliseconds = (Date.now() - startTime);		
 	var remainingMilliseconds = userSetMilliseconds - elapsedMilliseconds;
 
@@ -135,7 +134,7 @@ function updateTimer() {
 		return;
 	}
 	
-	displayTimer();
+	displayTimer(remainingMilliseconds);
 }
 
 // code via http://diveintohtml5.info/storage.html
@@ -183,9 +182,9 @@ function resumeState() {
 	
 	updateTimerButtons();
 	
-	displayTimer();
-	
 	userSetMilliseconds -= elapsedMilliseconds;
+	
+	displayTimer(userSetMilliseconds);
 	
 	console.log('timerOn right after resumeState: ' + timerOn);
 	if (timerOn) {
