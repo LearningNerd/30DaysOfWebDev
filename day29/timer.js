@@ -11,7 +11,6 @@ window.addEventListener('beforeunload', saveState); // save timer state when pag
 
 // if there's stuff in local storage, resume previous state
 if(localStorage.getItem('intervalID')) {
-	console.log('CALLING RESUMESTATE 1');
 	resumeState();
 }
 
@@ -65,6 +64,7 @@ function resetTimer() {
 	userSetMilliseconds = 0;
 	elapsedMilliseconds = 0;
 	timerPaused = true;
+	timerOn = false;
 	updateTimerButtons();
 	document.getElementById('timer').innerHTML = '00:00';
 	document.getElementById('timer').style.color = '';
@@ -127,7 +127,6 @@ function updateTimer() {
 		resetTimer();
 		// toggle mode from work to break or break to work
 		timerWorkMode = !timerWorkMode;
-		updateTimerButtons()
 		var timerModeString = timerWorkMode ? 'Time to get back to work!' : 'Time to take a break!';
 		document.getElementById('timer').innerHTML = timerModeString;
 		document.getElementById('timer').style.color = 'red';
@@ -155,6 +154,9 @@ function supportsLocalStorage() {
 function saveState() {
     if (!supportsLocalStorage()) { return false; }
 	console.log('CALLLING SAVESTATE!');
+	if (!timerPaused) { // so timer will continue where it left off when window is reopened
+		userSetMilliseconds -= elapsedMilliseconds;
+	}
     localStorage['intervalID'] = intervalID;
 	localStorage['timerOn'] = timerOn;
 	localStorage['timerPaused'] = timerPaused;
@@ -168,7 +170,7 @@ function saveState() {
 }
 
 function resumeState() {
-	console.log('CALLING RESUMESTATE 2');
+	console.log('CALLING RESUMESTATE!');	
 	intervalID = parseInt(localStorage['intervalID']);
 	timerOn = (localStorage['timerOn'] == 'true');
 	timerPaused = (localStorage['timerPaused'] == 'true');
@@ -186,9 +188,8 @@ function resumeState() {
 		document.getElementById('time').value = userSetBreakDuration;
 	}
 	
-	updateTimerButtons();
 	
-	userSetMilliseconds -= elapsedMilliseconds;
+	updateTimerButtons();	
 	
 	displayTimer(userSetMilliseconds);
 	
