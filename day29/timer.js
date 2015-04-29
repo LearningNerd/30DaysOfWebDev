@@ -107,12 +107,18 @@ function displayTimer(remainingMilliseconds) {
 	document.getElementById('timer').innerHTML = timerString;
 }
 
+function playTimerDoneSound() {
+	var ding = new Audio('ding.wav');
+	ding.play();
+}
+
 function updateTimer() {	
 	elapsedMilliseconds = (Date.now() - startTime);		
 	var remainingMilliseconds = userSetMilliseconds - elapsedMilliseconds;
 
 	// if the timer is up, stop the timer and show a message
 	if (remainingMilliseconds <= 0) {
+		playTimerDoneSound();
 		if (timerWorkMode) {
 			finishedPomodoros++; // save # of pomodoros completed
 			document.getElementById('pomodoros').innerHTML = finishedPomodoros;
