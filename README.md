@@ -31,4 +31,5 @@ Website: http://learningnerd.github.io/30DaysOfWebDev/
 - [Day 26: Vertical Rhythm] (http://learningnerd.github.io/30DaysOfWebDev/day26/)
 - [Day 27: Countdown Timer] (http://learningnerd.github.io/30DaysOfWebDev/day27/)
 - [Day 28: Local Web Storage] (http://learningnerd.github.io/30DaysOfWebDev/day28/)
-- Day 29 - stay tuned!
+- [Day 29: Better Pomodoro Timer] (http://learningnerd.github.io/30DaysOfWebDev/day29/)
+- Day 30 - stay tuned!
