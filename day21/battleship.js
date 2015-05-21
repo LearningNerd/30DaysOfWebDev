@@ -208,42 +208,49 @@ function BattleshipGame(rows, cols, gameBoardContainer, alertsContainer) {
 	};
 	
 	this.testNewAlgorithm = function () {		
-		if (possibleShipLocations.length == 0 && runHorizCheck == true && runVertCheck == true) {
-			this.alerts.displayMessage('Nowhere left to place the ship!');
+		if (possibleHorizontalShipLocations.length == 0 && possibleVerticalShipLocations.length == 0){
+			if(runHorizCheck == true && runVertCheck == true) {
+				this.alerts.displayMessage('Nowhere left to place the ship!');
+			} else if(runHorizCheck == true || runVertCheck == true) {
+				this.alerts.displayMessage('Try running the other algorithm.');
+			}else{
+				this.alerts.displayMessage('Try running a placement algorithm first.');
+			}
 			return;
-		} else if (possibleShipLocations.length == 0) {
-			this.alerts.displayMessage('Try running the other algorithm first.');
 		}
 		console.log('called testNewAlgorithm');
 		// pick a random entry from possibleShipLocations
-		var randomIndex = Math.floor(Math.random() * possibleShipLocations.length);
-		var chosenShipCoords = possibleShipLocations[randomIndex];
+		if(!possibleVerticalShipLocations.length || possibleHorizontalShipLocations.length && Math.random() > 0.5){
+			var randomIndex = Math.floor(Math.random() * possibleHorizontalShipLocations.length);
+			var chosenShipCoords = possibleHorizontalShipLocations[randomIndex];
+		}else{
+			var randomIndex = Math.floor(Math.random() * possibleVerticalShipLocations.length);
+			var chosenShipCoords = possibleVerticalShipLocations[randomIndex];
+		}
 		console.log('randomIndex = ' + randomIndex);
 		// create a new ship, add it to game.ships array
 		var ship = new Ship(chosenShipCoords.length);
 		this.ships.push(ship);
 		this.shipsRemaining++;
-				
+
 		// place the ship on the board
-		for (i = 0; i < chosenShipCoords.length; i++) {								
+		resetAnimation();
+		for (i = 0; i < chosenShipCoords.length; i++) {
 			var x = chosenShipCoords[i][0];
 			var y = chosenShipCoords[i][1];
-			this.board[x][y] = 1;								
+			this.board[x][y] = 1;
 			console.log('Placed ship square ' + i + ' at ' + x + ', ' + y)
 			// display ship right away, for testing
 			document.getElementById('s'+x+'-'+y).style.background = ship.color;
-		}		
-				
+		}
+
 		console.log('Number of ships on the board: ' + this.ships.length)
-		console.log(this.ships);	
-		
-		// remove chosen location from possibleShipLocations
-		possibleShipLocations.splice(randomIndex, 1);
-		console.log('possibleShipLocations:');
-		console.log(possibleShipLocations);
-		
-		// update count in HTML
-		document.getElementById('message2').innerHTML = "Possible remaining locations for this ship: <strong>" + possibleShipLocations.length + '</strong>';
+		console.log(this.ships);
+
+		// Re-run possible locations since we don't know what other locations overlap the one we just used
+		if(runHorizCheck) startAnimationHorizontal(true);
+		if(runVertCheck) startAnimationVertical(true);
+		game.alerts.displayMessage('Re-checked and found '+(possibleHorizontalShipLocations.length + possibleVerticalShipLocations.length)+' possible starting location(s).');
 	};
 }
 
@@ -278,7 +285,8 @@ function Ship(size) {
 // global game variable, which will be modified by other functions
 var game;
 // global variable to save list of possible ship locations, for use between functions while I test it out
-var possibleShipLocations = [];
+var possibleHorizontalShipLocations = [];
+var possibleVerticalShipLocations = [];
 var runHorizCheck = false;
 var runVertCheck = false;
 
@@ -334,121 +342,137 @@ function resetAnimation() {
 	}
 }
 
-function startAnimationHorizontal() {
-	resetAnimation();
-	var speed = parseInt(document.getElementById('speed').value);
+function startAnimationHorizontal(instant) {
+	var speed = instant === true ? -1 : parseInt(document.getElementById('speed').value);
 	var shipSize = parseInt(document.getElementById('size').value);
-	var consecutiveEmptySquares = [];
-	testPlacementAlgorithmHorizontal(0, 0, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);
+	if(speed >= 0){
+		resetAnimation();
+	}
+	possibleHorizontalShipLocations.length = 0;
+	testPlacementAlgorithmHorizontal(0, 0, speed, shipSize, possibleHorizontalShipLocations);
 	console.log('Starting horizontal placement algorithm. Ship size:' + shipSize + '. Animation speed: ' + speed + ' milliseconds.');
 }
 
-function startAnimationVertical() {
-	resetAnimation();
-	var speed = parseInt(document.getElementById('speed').value);
+function startAnimationVertical(instant) {
+	var speed = instant === true ? -1 : parseInt(document.getElementById('speed').value);
 	var shipSize = parseInt(document.getElementById('size').value);
-	var consecutiveEmptySquares = [];
-	testPlacementAlgorithmVertical(0, 0, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);
-	console.log('Starting vertical placement algorithm. Ship size:' + shipSize + '. Animation speed: ' + speed + ' milliseconds.');		
+	if(speed >= 0){
+		resetAnimation();
+	}
+	possibleVerticalShipLocations.length = 0;
+	testPlacementAlgorithmVertical(0, 0, speed, shipSize, possibleVerticalShipLocations);
+	console.log('Starting vertical placement algorithm. Ship size:' + shipSize + '. Animation speed: ' + speed + ' milliseconds.');
 }
 
 // run and visualize algorithm for placing ships on the board horizontally
-function testPlacementAlgorithmHorizontal(x, y, speed, shipSize, consecutiveEmptySquares, possibleShipLocations)
-{	
+function testPlacementAlgorithmHorizontal(x, y, speed, shipSize, possibleHorizontalShipLocations) {
 	var message; // use this to hold info to display in HTML
 	var currentSquare = document.getElementById('s' + x + '-' + y);
 	// recursively check each square, rows then columns
-	if (x < game.board.length) {		
-		if (y < game.board[0].length) {			
-			currentSquare.style.border = '2px dotted #333';
-			message = 'x = ' + x + ', y = ' + y;
-			// if this square is empty, save its coordinates to consecutiveEmptySquares array
-			if (game.board[x][y] == 0) {
-				consecutiveEmptySquares.push([x, y]);
-				message += ' | Empty square! Consecutive empty squares: ' + consecutiveEmptySquares.length;	
-
-				// if we have [shipSize] number of consecutive empty squares, add to possibleShipLocations array, reset consecutiveEmptySquares
-				if (consecutiveEmptySquares.length == shipSize) {				
-					possibleShipLocations.push(consecutiveEmptySquares);					
-					document.getElementById('message2').innerHTML = "Possible remaining locations for this ship: <strong>" + possibleShipLocations.length + '</strong>';
-					
-					// recolor squares where ship can be placed:
-					for (i = 0; i < consecutiveEmptySquares.length; i++) {						
-						document.getElementById('s' + consecutiveEmptySquares[i][0] + '-' + consecutiveEmptySquares[i][1]).style.border = '2px dotted red';													
-					}
-					
-					// reset to check for next possible ship placements
-					consecutiveEmptySquares = [];
-				}
-				
-			} else {
-				// if square is not empty, reset consecutiveEmptySquares
-				consecutiveEmptySquares = [];
-				message += " | There's a ship here!";				
+	if (x < game.board.length) {
+		if (y < game.board[0].length) {
+			if(speed >= 0){
+				currentSquare.style.border = '2px dotted #333';
 			}
-						
-			console.log('consecutiveEmptySquares: ');
-			console.log(consecutiveEmptySquares);
-			console.log('possibleShipLocations:');
-			console.log(possibleShipLocations);
-			game.alerts.displayMessage(message);
-			setTimeout(function(){return testPlacementAlgorithmHorizontal(x, y+1, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);}, speed);
+			message = 'x = ' + x + ', y = ' + y;
+			if (game.board[x][y] == 0) {
+				message += ' | Empty square!';
+
+				// Peek at the next "shipSize" squares...
+				var z = 0;
+				while(y + z < game.board[0].length && game.board[x][y + z] == 0){
+					if(speed >= 0){
+						document.getElementById('s' + x + '-' + (y + z)).style.border = '1px dotted #333';
+					}
+					if(z >= shipSize - 1){
+						var loc = [];
+						for(var i = 0; i < shipSize; i++){
+							loc.push([x, y + z - shipSize + 1 + i]);
+						}
+						possibleHorizontalShipLocations.push(loc);
+						document.getElementById('s' + x + '-' + (y + z - shipSize + 1)).style.border = '2px solid red';
+					}
+					z++;
+				}
+				message += ' | Found '+Math.max(0, z - shipSize + 1)+' possible starting square(s).';
+				y += z - 1;
+			}
+
+			console.log('possibleHorizontalShipLocations:', possibleHorizontalShipLocations);
+			if(speed >= 0){
+				game.alerts.displayMessage(message);
+			}
+			if(speed < 0){
+				testPlacementAlgorithmHorizontal(x, y+1, speed, shipSize, possibleHorizontalShipLocations);
+			}else{
+				setTimeout(function(){return testPlacementAlgorithmHorizontal(x, y+1, speed, shipSize, possibleHorizontalShipLocations);}, speed);
+			}
 		} else {
-			// at the end of each row, reset consecutiveEmptySquares (because ships can't span multiple rows!)
-			consecutiveEmptySquares = [];
 			runHorizCheck = true;
-			setTimeout(function(){return testPlacementAlgorithmHorizontal(x+1, 0, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);}, speed);
-		}		
+			if(speed < 0){
+				testPlacementAlgorithmHorizontal(x+1, 0, speed, shipSize, possibleHorizontalShipLocations);
+			}else{
+				setTimeout(function(){return testPlacementAlgorithmHorizontal(x+1, 0, speed, shipSize, possibleHorizontalShipLocations);}, speed);
+			}
+		}
+	}else{
+		game.alerts.displayMessage('Finished horizontal check and found '+possibleHorizontalShipLocations.length+' possible horizontal starting location(s).');
 	}
 }
 
 // run and visualize algorithm for placing ships on the board horizontally
-function testPlacementAlgorithmVertical(x, y, speed, shipSize, consecutiveEmptySquares, possibleShipLocations)
-{	
+function testPlacementAlgorithmVertical(x, y, speed, shipSize, possibleVerticalShipLocations) {
 	var message; // use this to hold info to display in HTML
 	var currentSquare = document.getElementById('s' + x + '-' + y);
 	// recursively check each square, rows then columns
-	if (y < game.board[0].length) {		
-		if (x < game.board.length) {			
-			currentSquare.style.border = '2px dotted #333';
-			message = 'x = ' + x + ', y = ' + y;
-			// if this square is empty, save its coordinates to consecutiveEmptySquares array
-			if (game.board[x][y] == 0) {
-				consecutiveEmptySquares.push([x, y]);
-				message += ' | Empty square! Consecutive empty squares: ' + consecutiveEmptySquares.length;	
-
-				// if we have [shipSize] number of consecutive empty squares, add to possibleShipLocations array, reset consecutiveEmptySquares
-				if (consecutiveEmptySquares.length == shipSize) {				
-					possibleShipLocations.push(consecutiveEmptySquares);					
-					document.getElementById('message2').innerHTML = "Places found where the ship can fit: <strong>" + possibleShipLocations.length + '</strong>';
-					
-					// recolor squares where ship can be placed:
-					for (i = 0; i < consecutiveEmptySquares.length; i++) {						
-						document.getElementById('s' + consecutiveEmptySquares[i][0] + '-' + consecutiveEmptySquares[i][1]).style.border = '2px dotted red';													
-					}
-					
-					// reset to check for next possible ship placements
-					consecutiveEmptySquares = [];
-				}
-				
-			} else {
-				// if square is not empty, reset consecutiveEmptySquares
-				consecutiveEmptySquares = [];
-				message += " | There's a ship here!";				
+	if (y < game.board[0].length) {
+		if (x < game.board.length) {
+			if(speed >= 0){
+				currentSquare.style.border = '2px dotted #333';
 			}
-						
-			console.log('consecutiveEmptySquares: ');
-			console.log(consecutiveEmptySquares);
-			console.log('possibleShipLocations:');
-			console.log(possibleShipLocations);
-			game.alerts.displayMessage(message);
-			setTimeout(function(){return testPlacementAlgorithmVertical(x+1, y, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);}, speed);
+			message = 'x = ' + x + ', y = ' + y;
+			if (game.board[x][y] == 0) {
+				message += ' | Empty square!';
+
+				// Peek at the next "shipSize" squares...
+				var z = 0;
+				while(x + z < game.board[0].length && game.board[x + z][y] == 0){
+					if(speed >= 0){
+						document.getElementById('s' + (x + z) + '-' + y).style.border = '1px dotted #333';
+					}
+					if(z >= shipSize - 1){
+						var loc = [];
+						for(var i = 0; i < shipSize; i++){
+							loc.push([x + z - shipSize + 1 + i, y]);
+						}
+						possibleVerticalShipLocations.push(loc);
+						document.getElementById('s' + (x + z - shipSize + 1) + '-' + y).style.border = '2px solid red';
+					}
+					z++;
+				}
+				message += ' | Found '+Math.max(0, z - shipSize + 1)+' possible starting square(s).';
+				x += z - 1;
+			}
+
+			console.log('possibleVerticalShipLocations:', possibleVerticalShipLocations);
+			if(speed >= 0){
+				game.alerts.displayMessage(message);
+			}
+			if(speed < 0){
+				testPlacementAlgorithmVertical(x + 1, y, speed, shipSize, possibleVerticalShipLocations);
+			}else{
+				setTimeout(function(){return testPlacementAlgorithmVertical(x + 1, y, speed, shipSize, possibleVerticalShipLocations);}, speed);
+			}
 		} else {
-			// at the end of each row, reset consecutiveEmptySquares (because ships can't span multiple rows!)
-			consecutiveEmptySquares = [];
 			runVertCheck = true;
-			setTimeout(function(){return testPlacementAlgorithmVertical(0, y+1, speed, shipSize, consecutiveEmptySquares, possibleShipLocations);}, speed);
-		}		
+			if(speed < 0){
+				testPlacementAlgorithmVertical(0, y + 1, speed, shipSize, possibleVerticalShipLocations);
+			}else{
+				setTimeout(function(){return testPlacementAlgorithmVertical(0, y + 1, speed, shipSize, possibleVerticalShipLocations);}, speed);
+			}
+		}
+	}else{
+		game.alerts.displayMessage('Finished vertical check and found '+possibleVerticalShipLocations.length+' possible vertical starting location(s).');
 	}
 }
 
